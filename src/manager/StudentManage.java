@@ -36,7 +36,18 @@ public class StudentManage
 		System.out.print("所在系号：");
 		int departmentID = scan.nextInt();
 
-		if (qr.update(conn, sql, id, name, sex, birth, grade, departmentID) == 1)
+		int row = 0;
+
+		try
+		{
+			qr.update(conn, sql, id, name, sex, birth, grade, departmentID);
+		} catch (Exception e)
+		{
+			System.out.println("录入新生信息失败！请重新进行操作！");
+			return false;
+		}
+
+		if (row == 1)
 		{
 			System.out.println("录入新生信息成功！");
 			return true;
@@ -96,7 +107,7 @@ public class StudentManage
 
 		if (tag == 1)
 			return newStudentRecord(conn);
-		else if(tag == 2 || tag == 3)
+		else if (tag == 2 || tag == 3)
 		{
 			System.out.print("输入学生的学号：");
 			String id = scan.nextLine();
@@ -136,8 +147,7 @@ public class StudentManage
 				System.out.println("将该生信息存入历史库失败！请重新操作！");
 				return false;
 			}
-		}
-		else
+		} else
 		{
 			System.out.println("请输入正确的数字！");
 			return false;
