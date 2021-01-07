@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-12">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.37-bin.jar"/>
+	<classpathentry kind="lib" path="commons-dbutils-1.6.jar" sourcepath="D:/BaiduNetdiskDownload/JDBC核心技术/3-资料/2-驱动/04-dbutils/commons-dbutils-1.3/commons-dbutils-1.3-sources.jar"/>
+	<classpathentry kind="lib" path="druid-1.1.10.jar" sourcepath="D:/BaiduNetdiskDownload/JDBC核心技术/3-资料/2-驱动/03-数据库连接池驱动/druid-1.1.10/druid-1.1.10-sources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
