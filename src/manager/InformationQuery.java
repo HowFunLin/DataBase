@@ -120,7 +120,7 @@ public class InformationQuery
 
 	public static boolean queryDepartment(Connection conn) throws SQLException
 	{
-		System.out.print("选择查询系的基本信息的方式：1-系号，2-系名称");
+		System.out.print("选择查询系的基本信息的方式：1-系号，2-系名称 ");
 		int tag = Integer.valueOf(scan.nextLine());
 
 		String column;
@@ -163,7 +163,7 @@ public class InformationQuery
 
 	public static boolean queryCourse(Connection conn) throws SQLException
 	{
-		System.out.print("选择查询课程基本信息的方式：1-课程号，2-课程名称，3-上课教师姓名");
+		System.out.print("选择查询课程基本信息的方式：1-课程号，2-课程名称，3-上课教师姓名 ");
 		int tag = Integer.valueOf(scan.nextLine());
 
 		String column;

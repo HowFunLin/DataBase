@@ -61,7 +61,7 @@ public class StaffManage
 			return false;
 		}
 
-		System.out.print("输入要修改的属性名（id, name，staffID, hours, credits, classTime, classLocate, examDate）：");
+		System.out.print("输入要修改的属性名（id, name, sex, birth, departmentID, title, major, direct）：");
 		String column = scan.nextLine();
 		System.out.print("输入修改后的属性内容：");
 		String data = scan.nextLine();

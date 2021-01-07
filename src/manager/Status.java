@@ -144,6 +144,7 @@ public class Status
 			return false;
 		} else
 		{
+			System.out.println();
 			for (Map<String, Object> map : grades)
 				System.out.println(map.toString().replaceAll("=", "：").replaceAll("\\{|\\}", ""));
 

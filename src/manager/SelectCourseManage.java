@@ -74,10 +74,10 @@ public class SelectCourseManage
 
 	public static boolean update(Connection conn) throws SQLException
 	{
-		System.out.print("输入要修改的选课信息：");
+		System.out.println("输入要修改的选课信息：");
 		System.out.print("输入学号：");
 		String studentID = scan.nextLine();
-		System.out.print("输入课程号");
+		System.out.print("输入课程号：");
 		String courseID = scan.nextLine();
 
 		System.out.print("输入要修改的属性名（studentID, courseID, credits）：");

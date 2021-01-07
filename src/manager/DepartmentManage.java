@@ -26,7 +26,18 @@ public class DepartmentManage
 		System.out.print("系的简介：");
 		String intro = scan.nextLine();
 
-		if (qr.update(conn, sql, id, name, intro) == 1)
+		int row;
+		
+		try
+		{
+			row = qr.update(conn, sql, id, name, intro);
+		} catch (Exception e)
+		{
+			System.out.println("已有相同系号的专业！输入系的基本信息失败！");
+			return false;
+		}
+		
+		if (row == 1)
 		{
 			System.out.println("输入系的基本信息成功！");
 			return true;

@@ -9,14 +9,13 @@ public class Main
 	{
 		Connection conn = Connections.getConnection();
 		Scanner scan = new Scanner(System.in);
-		
-		main:while (true)
+
+		main: while (true)
 		{
 			System.out.println("\n选择操作内容：");
 			System.out.println("1-学生基本信息管理，2-系基本信息管理，3-课程信息管理，4-教职工信息管理");
-			System.out.print("5-选课管理，6-成绩管理，7-信息查询，8-统计报表，9-退出 ");
+			System.out.print("5-选课管理，6-成绩管理，7-信息查询，8-统计报表，9-显示历史库，10-退出 ");
 
-			
 			int tag = Integer.valueOf(scan.next());
 
 			switch (tag)
@@ -45,7 +44,7 @@ public class Main
 
 			case 2:
 				System.out.print("\n选择进行的操作：1-输入，2-修改，3-删除 ");
-				select = Integer.valueOf(scan.nextLine());
+				select = scan.nextInt();
 
 				switch (select)
 				{
@@ -66,7 +65,7 @@ public class Main
 				break;
 			case 3:
 				System.out.print("\n选择进行的操作：1-输入，2-修改，3-删除 ");
-				select = Integer.valueOf(scan.nextLine());
+				select = scan.nextInt();
 
 				switch (select)
 				{
@@ -87,7 +86,7 @@ public class Main
 				break;
 			case 4:
 				System.out.print("\n选择进行的操作：1-输入，2-修改，3-删除 ");
-				select = Integer.valueOf(scan.nextLine());
+				select = scan.nextInt();
 
 				switch (select)
 				{
@@ -108,7 +107,7 @@ public class Main
 				break;
 			case 5:
 				System.out.print("\n选择进行的操作：1-选课，2-修改，3-删除 ");
-				select = Integer.valueOf(scan.nextLine());
+				select = scan.nextInt();
 
 				switch (select)
 				{
@@ -129,7 +128,7 @@ public class Main
 				break;
 			case 6:
 				System.out.print("\n选择进行的操作：1-输入，2-修改 ");
-				select = Integer.valueOf(scan.nextLine());
+				select = scan.nextInt();
 
 				switch (select)
 				{
@@ -146,7 +145,7 @@ public class Main
 				break;
 			case 7:
 				System.out.print("\n选择进行的操作：1-查询学生，2-查询教职工，3-查询系，4-查询课程，5-查询成绩 ");
-				select = Integer.valueOf(scan.nextLine());
+				select = scan.nextInt();
 
 				switch (select)
 				{
@@ -175,7 +174,7 @@ public class Main
 				break;
 			case 8:
 				System.out.print("\n选择进行的操作：1-输出成绩登记表，2-输出成绩报表 ");
-				select = Integer.valueOf(scan.nextLine());
+				select = scan.nextInt();
 
 				switch (select)
 				{
@@ -191,12 +190,16 @@ public class Main
 
 				break;
 			case 9:
+				System.out.println("\n历史库信息：");
+				HistoryManage.select(conn);
+				break;
+			case 10:
+				System.out.println();
 				System.out.println("系统已退出！");
 				break main;
 			}
-			
 		}
-		
+
 		scan.close();
 	}
 }
