@@ -9,10 +9,12 @@ public class Main
 	{
 		Connection conn = Connections.getConnection();
 		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("----------教学管理系统----------");
 
 		main: while (true)
 		{
-			System.out.println("\n选择操作内容：");
+			System.out.println("\n选择操作内容（在系统中输入0可返回该操作）：");
 			System.out.println("1-学生基本信息管理，2-系基本信息管理，3-课程信息管理，4-教职工信息管理");
 			System.out.print("5-选课管理，6-成绩管理，7-信息查询，8-统计报表，9-显示历史库，10-退出 ");
 

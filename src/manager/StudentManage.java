@@ -22,25 +22,25 @@ public class StudentManage
 
 		System.out.println("输入新生信息：");
 		System.out.print("学号：");
-		String id = scan.nextLine();
+		String id = scan.next();
 		System.out.print("姓名：");
-		String name = scan.nextLine();
+		String name = scan.next();
 		System.out.print("性别：");
-		String sex = scan.nextLine();
+		String sex = scan.next();
 
 		System.out.print("出生日期（输入形式 YYYY-MM-DD）：");
-		String birth = scan.nextLine();
+		String birth = scan.next();
 
 		System.out.print("入学成绩：");
 		int grade = scan.nextInt();
 		System.out.print("所在系号：");
 		int departmentID = scan.nextInt();
 
-		int row = 0;
+		int row;
 
 		try
 		{
-			qr.update(conn, sql, id, name, sex, birth, grade, departmentID);
+			row = qr.update(conn, sql, id, name, sex, birth, grade, departmentID);
 		} catch (Exception e)
 		{
 			System.out.println("录入新生信息失败！请重新进行操作！");
