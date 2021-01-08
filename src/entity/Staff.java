@@ -1,17 +1,19 @@
 package entity;
 
+import java.sql.Date;
+
 public class Staff
 {
 	private String id;
 	private String name;
 	private String sex;
-	private String birth;
+	private Date birth;
 	private int departmentID;
 	private String title;
 	private String major;
 	private String direct;
 	
-	public Staff(String id, String name, String sex, String birth, int departmentID, String title, String major,
+	public Staff(String id, String name, String sex, Date birth, int departmentID, String title, String major,
 			String direct)
 	{
 		this.id = id;
@@ -59,12 +61,12 @@ public class Staff
 		this.sex = sex;
 	}
 
-	public String getBirth()
+	public Date getBirth()
 	{
 		return birth;
 	}
 
-	public void setBirth(String birth)
+	public void setBirth(Date birth)
 	{
 		this.birth = birth;
 	}

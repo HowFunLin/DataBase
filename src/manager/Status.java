@@ -54,7 +54,7 @@ public class Status
 			String sql = "SELECT courseID 课程号, Course.name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间, studentID 学号, Student.name 姓名, Student.sex 性别, peacetime 平时成绩, exam 考试成绩, total 总评成绩 "
 					+ "FROM Course, Grade, Student, Staff "
 					+ "WHERE courseID = Course.id AND studentID = Student.id AND StaffID = Staff.id AND " + column
-					+ " = ? " + "ORDER BY studentID";
+					+ " = ? " + "ORDER BY studentID ASC";
 
 			return queryGrade(conn, sql, data);
 		} else
@@ -65,7 +65,7 @@ public class Status
 
 		String sql = "SELECT courseID 课程号, Course.name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间, studentID 学号, Student.name 姓名, sex 性别, peacetime 平时成绩, exam 考试成绩, total 总评成绩 "
 				+ "FROM Course, Grade, Student " + "WHERE courseID = Course.id AND studentID = Student.id AND " + column
-				+ " = ? " + "ORDER BY studentID";
+				+ " = ? " + "ORDER BY studentID ASC";
 
 		return queryGrade(conn, sql, data);
 	}
@@ -109,9 +109,34 @@ public class Status
 			String sql = "SELECT courseID 课程号, Course.name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间, studentID 学号, Student.name 姓名, Student.sex 性别, peacetime 平时成绩, exam 考试成绩, total 总评成绩 "
 					+ "FROM Course, Grade, Student, Staff "
 					+ "WHERE courseID = Course.id AND studentID = Student.id AND StaffID = Staff.id AND " + column
-					+ " = ? " + "ORDER BY studentID";
+					+ " = ? " + "ORDER BY studentID ASC";
 
-			return queryGrade(conn, sql, data) && calculatePro(conn, data, column);
+			String sumSQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student, Staff "
+					+ "WHERE courseID = Course.id AND studentID = Student.id AND StaffID = Staff.id AND " + column
+					+ " = ? ";
+
+			String faliSQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student, Staff "
+					+ "WHERE courseID = Course.id AND studentID = Student.id AND StaffID = Staff.id AND " + column
+					+ " = ? AND total < 60";
+
+			String sixtySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student, Staff "
+					+ "WHERE courseID = Course.id AND studentID = Student.id AND StaffID = Staff.id AND " + column
+					+ " = ? AND total >= 60";
+
+			String seventySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student, Staff "
+					+ "WHERE courseID = Course.id AND studentID = Student.id AND StaffID = Staff.id AND " + column
+					+ " = ? AND total >= 70";
+
+			String eightySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student, Staff "
+					+ "WHERE courseID = Course.id AND studentID = Student.id AND StaffID = Staff.id AND " + column
+					+ " = ? AND total >= 80";
+
+			String ninetySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student, Staff "
+					+ "WHERE courseID = Course.id AND studentID = Student.id AND StaffID = Staff.id AND " + column
+					+ " = ? AND total >= 90";
+
+			return queryGrade(conn, sql, data)
+					&& calculatePro(conn, data, sumSQL, faliSQL, sixtySQL, seventySQL, eightySQL, ninetySQL);
 		} else
 		{
 			System.out.println("请选择正确的方式！");
@@ -120,9 +145,28 @@ public class Status
 
 		String sql = "SELECT courseID 课程号, Course.name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间, studentID 学号, Student.name 姓名, sex 性别, peacetime 平时成绩, exam 考试成绩, total 总评成绩 "
 				+ "FROM Course, Grade, Student " + "WHERE courseID = Course.id AND studentID = Student.id AND " + column
-				+ " = ? " + "ORDER BY studentID";
+				+ " = ? " + "ORDER BY studentID ASC";
 
-		return queryGrade(conn, sql, data) && calculatePro(conn, data, column);
+		String sumSQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
+				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? ";
+
+		String failSQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
+				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total < 60";
+
+		String sixtySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
+				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total > 60";
+
+		String seventySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
+				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total > 70";
+
+		String eightySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
+				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total > 80";
+
+		String ninetySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
+				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total > 90";
+
+		return queryGrade(conn, sql, data)
+				&& calculatePro(conn, data, sumSQL, failSQL, sixtySQL, seventySQL, eightySQL, ninetySQL);
 	}
 
 	/**
@@ -167,55 +211,39 @@ public class Status
 		Long sumBig = qr.query(conn, sql, new ScalarHandler<>(), data);
 		return Double.valueOf(sumBig);
 	}
-	
+
 	/**
 	 * 计算比例
-	 * @param conn 数据库连接
-	 * @param data 聚集函数查询条件
+	 * 
+	 * @param conn   数据库连接
+	 * @param data   聚集函数查询条件
 	 * @param column 聚集函数查询的列
 	 * @return 计算是否成功
 	 * @throws SQLException
 	 */
-	private static boolean calculatePro(Connection conn, String data, String column) throws SQLException
+	private static boolean calculatePro(Connection conn, String data, String sumSQL, String failSQL, String sixtySQL,
+			String seventySQL, String eightySQL, String ninetySQL) throws SQLException
 	{
-		String sumSQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
-				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? ";
-
 		double[] sum = new double[6];
-		
+
 		sum[0] = calculate(conn, sumSQL, data); // 表中行的总数
-		
-		String failSQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
-				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total < 60";
-		
+
 		sum[1] = calculate(conn, failSQL, data);
 
-		String sixtySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
-				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total > 60";
-		
 		sum[2] = calculate(conn, sixtySQL, data);
-		
-		String seventySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
-				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total > 70";
-		
+
 		sum[3] = calculate(conn, seventySQL, data);
-		
-		String eightySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
-				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total > 80";
-		
+
 		sum[4] = calculate(conn, eightySQL, data);
-		
-		String ninetySQL = "SELECT COUNT(*) " + "FROM Course, Grade, Student "
-				+ "WHERE courseID = Course.id AND studentID = Student.id AND " + column + " = ? AND total > 90";
-		
+
 		sum[5] = calculate(conn, ninetySQL, data);
-		
-		for(int i = 90, j = 5; i >= 60; i = i - 10, j--)
+
+		for (int i = 90, j = 5; i >= 60; i = i - 10, j--)
 		{
-			System.out.println(i + "分以上的学生人数为：" + (int)sum[j] + "\t所占比例为：" + ((sum[j] / sum[0]) * 100) + "%");
+			System.out.println(i + "分以上的学生人数为：" + (int) sum[j] + "\t所占比例为：" + ((sum[j] / sum[0]) * 100) + "%");
 		}
-		System.out.println("不及格的学生人数为：" + (int)sum[1] + "\t所占比例为：" + ((sum[1] / sum[0]) * 100) + "%");
-		
+		System.out.println("不及格的学生人数为：" + (int) sum[1] + "\t所占比例为：" + ((sum[1] / sum[0]) * 100) + "%");
+
 		return true;
 	}
 }

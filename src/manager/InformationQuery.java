@@ -240,8 +240,8 @@ public class InformationQuery
 			id = scan.nextLine();
 
 			String sql = "SELECT total 总评成绩, Grade.studentID 学号, Grade.courseID 课程号, peacetime 平时成绩, exam 考试成绩, name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间 "
-					+ "FROM Grade, Course WHERE Course.id = Grade.courseID AND studentID = ? " + "GROUP BY courseID "
-					+ "ORDER BY total DESC";
+					+ "FROM Grade, Course WHERE Course.id = Grade.courseID AND studentID = ? "
+					+ "ORDER BY courseID ASC, total DESC";
 
 			return queryGradeMethod(conn, sql, id);
 		} else if (tag == 2)
@@ -251,7 +251,7 @@ public class InformationQuery
 
 			String sql = "SELECT total 总评成绩, Grade.studentID 学号, Student.name 学生姓名, Grade.courseID 课程号, peacetime 平时成绩, exam 考试成绩, Course.name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间 "
 					+ "FROM Grade, Course, Student WHERE Course.id = Grade.courseID AND Student.id = Grade.studentID AND Student.name = ? "
-					+ "GROUP BY courseID " + "ORDER BY total DESC";
+					 + "ORDER BY courseID ASC, total DESC";
 			
 			return queryGradeMethod(conn, sql, id);
 		}
@@ -261,7 +261,7 @@ public class InformationQuery
 			id = scan.nextLine();
 
 			String sql = "SELECT total 总评成绩, Grade.studentID 学号, Grade.courseID 课程号, peacetime 平时成绩, exam 考试成绩, name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间 "
-					+ "FROM Grade, Course WHERE Course.id = Grade.courseID AND courseID = ? " + "GROUP BY courseID "
+					+ "FROM Grade, Course WHERE Course.id = Grade.courseID AND courseID = ? "
 					+ "ORDER BY total DESC";
 
 			return queryGradeMethod(conn, sql, id);
@@ -272,7 +272,7 @@ public class InformationQuery
 			id = scan.nextLine();
 
 			String sql = "SELECT total 总评成绩, Grade.studentID 学号, Grade.courseID 课程号, peacetime 平时成绩, exam 考试成绩, name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间 "
-					+ "FROM Grade, Course WHERE Course.id = Grade.courseID AND name = ? " + "GROUP BY courseID "
+					+ "FROM Grade, Course WHERE Course.id = Grade.courseID AND name = ? " 
 					+ "ORDER BY total DESC";
 
 			return queryGradeMethod(conn, sql, id);
@@ -284,7 +284,7 @@ public class InformationQuery
 			
 			String sql = "SELECT total 总评成绩, Grade.studentID 学号, Staff.name 上课教师姓名, Grade.courseID 课程号, peacetime 平时成绩, exam 考试成绩, Course.name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间 "
 					+ "FROM Grade, Course, Staff WHERE Course.id = Grade.courseID AND Staff.id = Course.staffID AND Staff.name = ? "
-					+ "GROUP BY courseID " + "ORDER BY total DESC";
+					+ "ORDER BY courseID ASC, total DESC";
 			
 			return queryGradeMethod(conn, sql, id);
 		}
@@ -295,7 +295,7 @@ public class InformationQuery
 			
 			String sql = "SELECT total 总评成绩, Grade.studentID 学号, Student.name 学生姓名, Grade.courseID 课程号, peacetime 平时成绩, exam 考试成绩, Course.name 课程名称, staffID 任课教师号, hours 学时, credits 学分, classTime 上课时间, classLocate 上课地点, examDate 考试时间, departmentID 所在系号 "
 					+ "FROM Grade, Course, Student WHERE Course.id = Grade.courseID AND Student.id = Grade.studentID AND Student.departmentID = ? "
-					+ "GROUP BY courseID " + "ORDER BY total DESC";
+					+ "ORDER BY courseID ASC, total DESC";
 			
 			return queryGradeMethod(conn, sql, id);
 		}

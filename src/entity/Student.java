@@ -1,15 +1,17 @@
 package entity;
 
+import java.sql.Date;
+
 public class Student
 {
 	private int grade;
 	private int departmentID;
-	private String birth;
+	private Date birth;
 	private String sex;
 	private String name;
 	private String id;
 	
-	public Student(int grade, int departmentID, String birth, String sex, String name, String id)
+	public Student(int grade, int departmentID, Date birth, String sex, String name, String id)
 	{
 		this.grade = grade;
 		this.departmentID = departmentID;
@@ -49,12 +51,12 @@ public class Student
 		this.sex = sex;
 	}
 
-	public String getBirth()
+	public Date getBirth()
 	{
 		return birth;
 	}
 
-	public void setBirth(String birth)
+	public void setBirth(Date birth)
 	{
 		this.birth = birth;
 	}

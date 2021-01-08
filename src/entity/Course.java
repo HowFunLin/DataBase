@@ -1,5 +1,7 @@
 package entity;
 
+import java.sql.Date;
+
 public class Course
 {
 	private String id;
@@ -9,10 +11,10 @@ public class Course
 	private int credits;
 	private String classTime;
 	private String classLocate;
-	private String examDate;
+	private Date examDate;
 
 	public Course(String id, String name, String staffID, int hours, int credits, String classTime, String classLocate,
-			String examDate)
+			Date examDate)
 	{
 		this.id = id;
 		this.name = name;
@@ -99,12 +101,12 @@ public class Course
 		this.classLocate = classLocate;
 	}
 
-	public String getExamDate()
+	public Date getExamDate()
 	{
 		return examDate;
 	}
 
-	public void setExamDate(String examDate)
+	public void setExamDate(Date examDate)
 	{
 		this.examDate = examDate;
 	}
